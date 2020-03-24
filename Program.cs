@@ -9,13 +9,10 @@ namespace PartyThyme
     static void Main(string[] args)
     {
       var db = new PlantsContext();
-
-      Console.WriteLine("Welcome to your Garden!");
-
-      bool leavingGarden = false;
-      while (!leavingGarden)
+      var isRunning = true;
+      while (isRunning)
       {
-
+        Console.WriteLine("Welcome to your Garden!");
         Console.WriteLine("What would you like to do?");
         Console.WriteLine("(View - V) (Plant something - P) (Remove - R) (Water - W) (View thirsty plants - VT) (Location Summary - L) (Quit - Q)");
 
@@ -24,11 +21,14 @@ namespace PartyThyme
         if (input == "v")
         {
           Console.WriteLine("Here are your current plants!");
-          var viewPlants = db.Plant.OrderBy(pl => pl.LocatedPlanted);
-          Console.WriteLine($"{viewPlants}");
-
+          var plants = db.Plant.OrderBy(p => p.LocatedPlanted);
+          foreach (var plant in plants)
+          {
+            Console.WriteLine($"\n{plant.Species} {plant.LocatedPlanted}");
+          }
+          Console.WriteLine("");
         }
-        if (input == "p")
+        else if (input == "p")
         {
           Console.WriteLine("What would you like to plant?");
           var species = Console.ReadLine().ToLower();
@@ -54,14 +54,59 @@ namespace PartyThyme
         }
         else if (input == "r")
         {
-
+          Console.WriteLine("\nWhat plant would you like to remove?");
+          var plants = db.Plant.OrderBy(p => p.Species);
+          foreach (var plant in plants)
+          {
+            Console.WriteLine($"{plant.Species}");
+          }
+          Console.WriteLine("");
+          var userInput = Console.ReadLine();
+          var plantToRemove = db.Plant.First(r => r.Species == userInput);
+          db.Plant.Remove(plantToRemove);
+          db.SaveChanges();
+          Console.WriteLine("");
+          Console.WriteLine("Your plant has been removed!");
+          Console.WriteLine("");
         }
+        else if (input == "w")
+        {
+          Console.WriteLine("\nWhat plant would you like to water?");
+          var plants = db.Plant.OrderBy(p => p.Species);
+          foreach (var plant in plants)
+          {
+            Console.WriteLine($"{plant.Species}");
+            Console.WriteLine("");
+          }
+          var userInput = Console.ReadLine().ToLower();
+          var plantToWater = db.Plant.First(p => p.Species == userInput);
+          plantToWater.LastWateredDate = new DateTime();
+
+          db.SaveChanges();
+          Console.WriteLine("");
+          Console.WriteLine("Your plant has been watered!");
+          Console.WriteLine("");
+        }
+        else if (input == "vt")
+        {
+          Console.WriteLine("These are the your thirsty plants...");
+          var plants = db.Plant.OrderBy(p => p.Species);
+          var todaysDate = DateTime.Today.Date;
+          var needToWater = db.Plant.Where(plant => plant.LastWateredDate != todaysDate);
+          Console.WriteLine("");
+          Console.WriteLine($"{needToWater}");
+          Console.WriteLine("");
+        }
+        //else if (input == "l")
+        //{
+
+        //}
         else if (input == "q")
         {
-          leavingGarden = true;
+          isRunning = false;
         }
-      }
 
+      }
 
     }
   }
