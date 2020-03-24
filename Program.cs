@@ -36,12 +36,6 @@ namespace PartyThyme
           Console.WriteLine("Where would you like to plant it?");
           var locatedPlanted = Console.ReadLine().ToLower();
 
-          Console.WriteLine("When was it planted?");
-          DateTime plantedDate = DateTime.Parse(Console.ReadLine());
-
-          Console.WriteLine("When was it last watered?");
-          DateTime lastWateredDate = DateTime.Parse(Console.ReadLine());
-
           Console.WriteLine("How many hours of sunlight are needed?");
           var lightNeeded = Console.ReadLine().ToLower();
 
@@ -52,8 +46,6 @@ namespace PartyThyme
           {
             Species = species,
             LocatedPlanted = locatedPlanted,
-            PlantedDate = plantedDate,
-            LastWateredDate = lastWateredDate,
             LightNeeded = lightNeeded,
             WaterNeeded = waterNeeded,
           };

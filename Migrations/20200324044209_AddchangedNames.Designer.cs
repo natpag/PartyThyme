@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using PartyThyme;
@@ -9,9 +10,10 @@ using PartyThyme;
 namespace PartyThyme.Migrations
 {
     [DbContext(typeof(PlantsContext))]
-    partial class PlantContextModelSnapshot : ModelSnapshot
+    [Migration("20200324044209_AddchangedNames")]
+    partial class AddchangedNames
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
