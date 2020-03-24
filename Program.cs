@@ -8,7 +8,7 @@ namespace PartyThyme
   {
     static void Main(string[] args)
     {
-      var db = new PlantContext();
+      var db = new PlantsContext();
 
       Console.WriteLine("Welcome to your Garden!");
 
@@ -48,7 +48,7 @@ namespace PartyThyme
           Console.WriteLine("How many ML of water are needed?");
           var waterNeeded = Console.ReadLine().ToLower();
 
-          var plant = new Plant
+          var plant = new Plants
           {
             Species = species,
             LocatedPlanted = locatedPlanted,
