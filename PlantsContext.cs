@@ -5,15 +5,15 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace PartyThyme
 {
-  public partial class PlantContext : DbContext
+  public partial class PlantsContext : DbContext
   {
-    public DbSet<Plant> Plants { get; set; }
+    public DbSet<Plants> Plant { get; set; }
 
-    public PlantContext()
+    public PlantsContext()
     {
     }
 
-    public PlantContext(DbContextOptions<PlantContext> options)
+    public PlantsContext(DbContextOptions<PlantsContext> options)
         : base(options)
     {
     }
