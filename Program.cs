@@ -80,7 +80,8 @@ namespace PartyThyme
           }
           var userInput = Console.ReadLine().ToLower();
           var plantToWater = db.Plant.First(p => p.Species == userInput);
-          plantToWater.LastWateredDate = new DateTime();
+          plantToWater.LastWateredDate = DateTime.Now;
+          db.Plant.Update(plantToWater);
 
           db.SaveChanges();
           Console.WriteLine("");
@@ -89,18 +90,26 @@ namespace PartyThyme
         }
         else if (input == "vt")
         {
-          Console.WriteLine("These are the your thirsty plants...");
+          Console.WriteLine("These are your thirsty plants...");
           var plants = db.Plant.OrderBy(p => p.Species);
           var todaysDate = DateTime.Today.Date;
-          var needToWater = db.Plant.Where(plant => plant.LastWateredDate != todaysDate);
-          Console.WriteLine("");
-          Console.WriteLine($"{needToWater}");
+          var needToWater = db.Plant.Where(plant => (plant.LastWateredDate.Date != todaysDate));
+          foreach (var plant in needToWater)
+          {
+            Console.WriteLine($"\n{plant.Species}");
+          }
           Console.WriteLine("");
         }
-        //else if (input == "l")
-        //{
-
-        //}
+        else if (input == "l")
+        {
+          Console.WriteLine("These are your plants with specific locations...");
+          var plants = db.Plant.OrderBy(p => p.Species);
+          var plantWithLocation = db.Plant.Where(plant => plant.LocatedPlanted != null && plant.LocatedPlanted != "");
+          foreach (var plant in plantWithLocation)
+          {
+            Console.WriteLine($"\n{plant.Species}");
+          }
+        }
         else if (input == "q")
         {
           isRunning = false;
